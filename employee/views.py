@@ -1,9 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Employee
 
-
+@login_required(login_url='login')
 def index(request):
     return render(request, 'index.html')
 
@@ -22,7 +23,6 @@ def employees(request):
         employee = Employee(emp_id=emp_id, emp_name=emp_name, date_time_in=date_time_in,
                             date_time_out=date_time_out, duration=duration, hourly_rate=hourly_rate)
         employee.save()
-
         messages.success(request, 'Time Sheet added successfully')
 
         return redirect('/accounts/dashboard')

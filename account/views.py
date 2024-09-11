@@ -1,41 +1,40 @@
 from django.contrib import messages, auth
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
+from .forms import RegisterForm
 from employee.models import Employee
 
 
+
+
 def registerUser(request):
+
     if request.method == 'POST':
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        username = request.POST['username']
-        id = request.POST['employee_id']
-        email = request.POST['email']
-        password = request.POST['password']
-        password2 = request.POST['password2']
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            username = form.cleaned_data['username']
+            id = form.cleaned_data['employee_id']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
 
-        if password == password2:
-            if User.objects.filter(username=username).exists():
-                messages.error(request, 'Username already taken')
-                return redirect('registerUser')
-            else:
-                if User.objects.filter(email=email).exists():
-                    messages.error(request, 'Email id already taken')
-                    return redirect('registerUser')
-                else:
-                    user = User.objects.create_user(username=username, password=password, email=email, id=id,
-                                                    first_name=first_name, last_name=last_name)
-                    user.save()
-                    messages.success(request, 'You are now register and can log in')
-                    return redirect('login')
-
-        else:
-            messages.error(request, 'Passwords do not match')
-            return redirect('registerUser')
+            user = User.objects.create(username=username, password=password, email=email, id=id,
+                                            first_name=first_name, last_name=last_name)
+            user.save()
+            messages.success(request, 'You are now register and can log in')
+            return redirect('login')
 
     else:
-        return render(request, 'accounts/register.html')
+        form = RegisterForm()
+    return render(request, 'accounts/register.html', {'form': form})
+
+
+
+
 
 
 def loginUser(request):
@@ -63,6 +62,7 @@ def logoutUser(request):
         return redirect('index')
 
 
+@login_required(login_url='login')
 def dashboardUser(request):
     user_time_entries = Employee.objects.order_by('date_time_out').filter(emp_id=request.user.id)
     context = {'time_entries': user_time_entries}
