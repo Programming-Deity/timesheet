@@ -1,11 +1,9 @@
-from crispy_forms.templatetags.crispy_forms_field import css_class
+# from crispy_forms.templatetags.crispy_forms_field import css_class
 from django import forms
 from django.core.validators import RegexValidator, EmailValidator
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, Row, Column
-from sqlalchemy import column
+
 
 alphanumeric_text = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
 
@@ -38,18 +36,6 @@ class RegisterForm(forms.Form):
         if password1 and password2 and password1 != password2:
             raise ValidationError('Password do not match.')
         return password2
-
-    # def __init__(self, *args, **kwargs):
-    #     super(RegisterForm, self).__init__(*args, **kwargs)
-    #     self.helper = FormHelper()
-    #     self.helper.layout = Layout(
-    #         Row(
-    #             Column('First Name1', css_class='form-group col-md-6 mb-0'),
-    #             Column('Last Name', css_class='form-group col-md-6 mb-0'),
-    #             css_class='form-row'
-    #         )
-    #     )
-
 
 
 

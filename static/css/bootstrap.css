@@ -1248,6 +1248,8 @@ pre {
   .table-responsive > .table-bordered {
     border: 0; }
 
+
+
 .form-control {
   display: block;
   width: 100%;
@@ -1259,8 +1261,9 @@ pre {
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
-  border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
+  border-radius: 0.6rem;
+  /*transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; */
+}
   @media screen and (prefers-reduced-motion: reduce) {
     .form-control {
       transition: none; } }
@@ -1595,6 +1598,8 @@ textarea.form-control {
       margin-bottom: 0; } }
 
 .btn {
+  width: 45%;
+  margin-left: 3.4%;
   display: inline-block;
   font-weight: 400;
   text-align: center;
@@ -3065,7 +3070,7 @@ input[type="button"].btn-block {
   background-color: #fff;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem; }
+  border-radius: 1.50rem; }
   .card > hr {
     margin-right: 0;
     margin-left: 0; }
@@ -3102,7 +3107,7 @@ input[type="button"].btn-block {
   background-color: rgba(0, 0, 0, 0.03);
   border-bottom: 1px solid rgba(0, 0, 0, 0.125); }
   .card-header:first-child {
-    border-radius: calc( 0.25rem - 1px) calc( 0.25rem - 1px) 0 0; }
+    border-radius: calc( 1.5rem - 1px) calc( 1.5rem - 1px) 0 0; }
   .card-header + .list-group .list-group-item:first-child {
     border-top: 0; }
 
@@ -4330,6 +4335,7 @@ button.bg-danger:focus {
   background-color: #f8f9fa !important;
   background: url("/static/zonopact.jpg") no-repeat fixed;
   background-size: cover;
+  height: 100vh;
 }
 
 a.bg-light:hover, a.bg-light:focus,

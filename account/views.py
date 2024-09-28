@@ -34,9 +34,6 @@ def registerUser(request):
 
 
 
-
-
-
 def loginUser(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -64,6 +61,6 @@ def logoutUser(request):
 
 @login_required(login_url='login')
 def dashboardUser(request):
-    user_time_entries = Employee.objects.order_by('date_time_out').filter(emp_id=request.user.id)
+    user_time_entries = Employee.objects.order_by('date_time_out')
     context = {'time_entries': user_time_entries}
     return render(request, 'accounts/dashboard.html', context)

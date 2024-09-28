@@ -1,5 +1,11 @@
 from django.db import models
-from datetime import datetime
+
+class Department(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 # Create your models here.
@@ -15,3 +21,13 @@ class Employee(models.Model):
     def __str__(self):
         return self.emp_name
 
+
+class Task(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    assigned_to = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+
+    def __str__(self):
+        return self.name

@@ -16,7 +16,7 @@
 <!--                class="nav-item mr-3"-->
 <!--                {% endif %}-->
 <!--              >-->
-<!--                <a class="nav-link" href="#}">Home</a>-->
+<!--                <a class="nav-link" href="#">Home</a>-->
 <!--              </li>-->
               <!--<li
                 {% if 'employees' in request.path %}
@@ -27,7 +27,6 @@
                 <a class="nav-link" href="{% url 'employees' %}">Employees</a>
               </li>-->
             </ul>
-
             <ul class="navbar-nav ml-auto">
               {% if user.is_authenticated %}
               <li
@@ -50,6 +49,13 @@
                   <input type="hidden">
                   </form>
                 </li>
+                  <li class="nav-item mr-3">
+                  <form method="GET" action="{% url 'role_list' %}">
+                    <input type="text" name="search" value="{{ search_query }}" class="form-control mr-2" placeholder="Search roles">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                  </form>
+                </li>
+
             {% else %}
               <ul class="navbar-nav ml-auto">
                 <li

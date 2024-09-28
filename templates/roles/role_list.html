@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %} | User Dashboard {% endblock %}
+
+{% block content %}
+<section id="showcase-inner" class="py-5">
+        <div class="container">
+          <div class="row text-center">
+            <div class="col-md-12">
+              <h1 class="display-4">Management Portal</h1>
+              <p class="lead">Manage Staff information</p>
+            </div>
+          </div>
+        </div>
+</section>
+
+      <!-- Breadcrumb -->
+      <section id="bc" class="mt-3">
+        <div class="container">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="{% url 'index' %}">
+                  <i class="fas fa-home"></i> Home</a>
+              </li>
+              <li class="breadcrumb-item active"> Management</li>
+            </ol>
+          </nav>
+        </div>
+      </section>
+
+      <!--Alerts-->
+      {% include 'partials/_alerts.html' %}
+
+      <section id="dashboard" class="py-4">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <h2>Welcome {{ user }}</h2>
+              <div>
+              <button class="btn-primary btn-block btn-lg" data-toggle="modal" style="float: right; width:200px;" data-target="#inquiryModal">Add New Role</button>
+              </div>
+              <!-- Time Sheet Model -->
+              <div class="modal fade" id="inquiryModal" role="dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="inquiryModalLabel">Add New Role</h5>
+                      <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="{% url 'add_role' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="name">Role Name</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="department">Department</label>
+                                <input type="text" class="form-control" id="department" name="department" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="platform_access">Platform Access</label>
+                                <input type="text" class="form-control" id="platform_access" name="platform_access" required>
+                            </div>
+                            <button type="submit" class="btn btn-success">Add Role</button>
+                            <a href="{% url 'role_list' %}" class="btn btn-secondary">Cancel</a>
+                        </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% if page_obj %}
+              <p>Here are the List of staff</p>
+              <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Role Name</th>
+                        <th>Department</th>
+                        <th>Users</th>
+                        <th>Platform Access</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for role in page_obj %}
+                    <tr>
+                        <td>{{ role.name }}</td>
+                        <td>{{ role.department }}</td>
+                        <td>{{ role.users.count }}</td>
+                        <td>{{ role.platform_access }}</td>
+                        <td>
+                            <a href="#" class="btn btn-sm btn-primary">Edit</a>
+                            <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">No roles found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+              {% else %}
+                <p>You have not made any inquiries</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </section>
+{% endblock %}
